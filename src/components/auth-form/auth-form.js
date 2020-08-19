@@ -15,13 +15,14 @@ export const AuthForm = () => {
         }))
     }
 
-    const Finish = (event) => {
+    const Finish = async (event) => {
         event.preventDefault();
-        console.log(formData)
+        console.log(сheckStringNormalize(formData.password));
     }
 
     const сheckStringNormalize = (str) => {
-        //Нужно сделать 3 проверки 
+        //3 проверки 
+        
             //1. Проверка на количество символов(не менее 8)
             const checkStrLength = str => str.length >= 8 ? true : false;
 
@@ -32,7 +33,7 @@ export const AuthForm = () => {
                 const check = item => {
                     if (item.charCodeAt() >= 65 && item.charCodeAt() <= 122) {
                         let newSymbol = item;
-                        if (newSymbol.toUpperCase() == item) {
+                        if (newSymbol.toUpperCase() === item) {
                             result = true;
                         }
                     }

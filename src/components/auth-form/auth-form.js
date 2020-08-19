@@ -9,12 +9,12 @@ export const AuthForm = () => {
                 <h1>Авторизация</h1>
                 <div className="login">
                     <label for="name">Логин:</label>
-                    <input name="name" type="text"></input>
+                    <input name="name" type="text" placeholder="Введите логин..."></input>
                 </div>
 
                 <div className="password">
                     <label for="password">Пароль:</label>
-                    <input name="password" type="password"></input>
+                    <input name="password" placeholder="Введите пароль..." type="password"></input>
                 </div>
 
                 <button type="submit">Войти</button>

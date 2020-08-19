@@ -4,6 +4,7 @@ import { AuthPage } from '../pages/auth-page';
 import { TerminalsPage } from '../pages/terminals-page';
 import { BuyersPage } from '../pages/buyers-page';
 import { Header } from '../header/';
+import './app.css';
 
 function App() {
   return (

@@ -52,6 +52,12 @@ export const AuthForm = () => {
 
                 return result;
             }
+
+            if (checkStrLength(str) && checkStrSymbol(str) && checkStrNumber(str)) {
+               return true;
+            } 
+
+            return false;
     }
 
     return (

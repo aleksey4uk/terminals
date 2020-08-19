@@ -1,10 +1,10 @@
 import { createStore, createEvent } from 'effector';
 
-const increment = createEvent('incrrement');
+const authorization = createEvent('authorization');
 
-const store = createStore(0);
-    store.on(increment, (state) => state + 1);
+const store = createStore(false);
+    store.on(authorization, (state) => true);
 
 store.watch(console.log)
 
-export { store, increment };
+export { store, authorization };

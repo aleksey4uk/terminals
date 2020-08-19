@@ -11,9 +11,9 @@ import './app.css';
 
 
 function App() {
-  const Authorization = useStore(store);
+  const Store = useStore(store);
 
-  if (!Authorization) return <AuthPage/>
+  if (!Store.authorization) return <AuthPage/>
   return (
     <div className="App">
       <Header/>

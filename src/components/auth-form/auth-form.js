@@ -1,8 +1,10 @@
 import React,{ useState } from 'react';
+import { authorization, loadUserIcon } from '../../store';
 import './auth-form.css';
 
 export const AuthForm = () => {
     const [formData, setFormData] = useState({login: '', password: ''});
+    const [error, setError] = useState({error: false, message: null});
 
     const handleChange = (event) => {
         event.preventDefault();
@@ -17,12 +19,17 @@ export const AuthForm = () => {
 
     const Finish = async (event) => {
         event.preventDefault();
-        console.log(сheckStringNormalize(formData.password));
+        //1. по логину заправшиваем аватар пользователя с gh 
+            //Если норм, помещаем url картинки в state
+        //2. Делаем проверки на число, заглавную букву и т.д | готов
+        const result = (сheckFormNormalize(formData.password) && await checkGithubUser(formData.login));
+        console.log('result ', result ) 
+        authorization(result);
     }
 
-    const сheckStringNormalize = (str) => {
+    const сheckFormNormalize = (str) => {
         //3 проверки 
-        
+
             //1. Проверка на количество символов(не менее 8)
             const checkStrLength = str => str.length >= 8 ? true : false;
 
@@ -57,9 +64,24 @@ export const AuthForm = () => {
             if (checkStrLength(str) && checkStrSymbol(str) && checkStrNumber(str)) {
                return true;
             } 
-
+            setError({error: true, message: 'Неккоректные данные ввода данных'})
             return false;
     }
+
+    const loadGithubUser = (name) => {
+        return fetch(`https://api.github.com/users/${name}`)
+          .then(response => response.json());
+    }
+
+    const checkGithubUser = async (name) => {
+        const user = await loadGithubUser(name);
+        if (user.message) {
+            setError((state) => ({error: true, message: 'Нет такого пользователя'}));
+            return false;
+        }
+        loadUserIcon(user.avatar_url);
+        return true;
+       }
 
     return (
         <div className='form'>

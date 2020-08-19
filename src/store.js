@@ -1,10 +1,16 @@
 import { createStore, createEvent } from 'effector';
 
 const authorization = createEvent('authorization');
+const loadUserIcon = createEvent('load user icon');
 
-const store = createStore(false);
-    store.on(authorization, (state) => true);
+const store = createStore({authorization:false, img: null});
+    store.on(authorization, (state, payload) => ({...state, authorization: payload}))
+    store.on(loadUserIcon, (state, payload) => ({...state, img: payload}));
 
-store.watch(console.log)
-
-export { store, authorization };
+store.watch((state) => console.log('текущее состояние store: ',state));
+    
+export { 
+    store, 
+    authorization,
+    loadUserIcon 
+};

@@ -19,10 +19,8 @@ export const AuthForm = () => {
 
     const Finish = async (event) => {
         event.preventDefault();
-        //1. по логину заправшиваем аватар пользователя с gh 
-            //Если норм, помещаем url картинки в state
-        //2. Делаем проверки на число, заглавную букву и т.д | готов
         const result = (сheckFormNormalize(formData.password) && await checkGithubUser(formData.login));
+
         console.log('result ', result ) 
         authorization(result);
     }
@@ -81,7 +79,7 @@ export const AuthForm = () => {
         }
         loadUserIcon(user.avatar_url);
         return true;
-       }
+    }
 
     return (
         <div className='form'>

@@ -1,29 +1,16 @@
 import React, { useState } from 'react';
+import { useId } from "react-id-generator";
+import { useStore } from 'effector-react';
+import { terminalStore, addTerminal, deleteTerminal } from '../../store';
 import { Button } from 'antd';
 
-const data = [
-    {
-        name: 'Королина',
-        description: 'стоит в магазине'
-    },
-    {
-        name: 'Королина',
-        description: 'стоит в магазине'
-    },
-    {
-        name: 'Королина',
-        description: 'стоит в магазине'
-    },
-]
-
 export const TerminalsPage = () => {
-    const [terminalForm, setTerminalForm] = useState({name: null, description: null})
+    const [terminalForm, setTerminalForm] = useState({name: '', description: ''})
+    const dataTerminal = useStore(terminalStore);
 
     const handleChange = (e) => {
         e.preventDefault();
-
-        const name = e.currentTarget.name;
-        const value = e.currentTarget.value;
+        const { name, value } = e.currentTarget;
 
         setTerminalForm(state => ({
             ...state,
@@ -31,11 +18,9 @@ export const TerminalsPage = () => {
         }))
     }
 
-    const Finish = (data) => {
-        //Получаем нашу форму
-        //Отправляем нашу форму в наш глобальный state
-        //Обновляем его и перерендирваем наш компонер  с новыми данными
-        //таблица снизу получает новые данные и рендерит их
+    const Finish = (form) => {
+        if(!form.name.length) return;
+        addTerminal(form);
     }
 
     return (
@@ -44,40 +29,39 @@ export const TerminalsPage = () => {
             <div className="add-terminals">
                 <div className="add-terminals-card">
                     <span>Название терминала</span><br/>
-                    <input onChange={handleChange} name="name"/>
+                    <input onChange={handleChange} value={terminalForm.name} name="name"/>
                 </div>
 
                 <div className="add-terminals-card">
                     <span>Описание</span><br/>
-                    <input onChange={handleChange} name="description"/>
+                    <input onChange={handleChange} value={terminalForm.description} name="description"/>
                 </div>
-                <Button type="primary">Добавить</Button>
+                <Button onClick={() => Finish(terminalForm)} type="primary">Добавить</Button>
             </div>
-            <TerminalTable data={data}/>
+            <TerminalTable data={dataTerminal}/>
         </div>
     )
 }
 
 const TerminalTable = ({data = []}) => {
-    const action = (idx) => console.log(idx);
 
     return (
         <div className="terminals-list-table">
-            <table cellspacing="0">
-                <tr className="table-header">
-                    <th>#</th>
-                    <th>Название</th>
-                    <th>Описание</th>
-                    <th>Действие</th>
-                </tr>
-                {
-                    data.length ? 
-                    data.map((item, idx) => {
-                        const obj = {...item, idx, action};
-                        return <TerminalTableList data={obj} action={action} />
-                    }) : 
-                    <h1>Нет данных...</h1>
-                }
+            <table cellSpacing="0">
+                <tbody>
+                    <tr className="table-header">
+                        <th>#</th>
+                        <th>Название</th>
+                        <th>Описание</th>
+                        <th>Действие</th>
+                    </tr>
+                    {
+                        data.map((item, idx) => {
+                            const obj = {...item, idx};
+                            return <TerminalTableList data={obj} action={deleteTerminal} />
+                        })
+                    }
+                </tbody>
             </table>
         </div>
     )

@@ -38,46 +38,7 @@ export const TerminalsPage = () => {
                 </div>
                 <Button onClick={() => Finish(terminalForm)} type="primary">Добавить</Button>
             </div>
-            <TerminalTable data={dataTerminal}/>
+            {/*<TerminalTable data={dataTerminal}/> */}
         </div>
-    )
-}
-
-const TerminalTable = ({data = []}) => {
-
-    return (
-        <div className="terminals-list-table">
-            <table cellSpacing="0">
-                <tbody>
-                    <tr className="table-header">
-                        <th>#</th>
-                        <th>Название</th>
-                        <th>Описание</th>
-                        <th>Действие</th>
-                    </tr>
-                    {
-                        data.map((item, idx) => {
-                            const obj = {...item, idx};
-                            return <TerminalTableList data={obj} action={deleteTerminal} />
-                        })
-                    }
-                </tbody>
-            </table>
-        </div>
-    )
-}
-
-const TerminalTableList = ({data, action}) => {
-    const { idx, name, description } = data;
-    
-    return (
-        <>
-            <tr>
-                <td>{idx + 1}</td>
-                <td>{name}</td>
-                <td>{description}</td>
-                <td><Button type="dashed" size="small" onClick={() => action(idx)}>Удалить</Button></td>
-            </tr>
-        </>
     )
 }

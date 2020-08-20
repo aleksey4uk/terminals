@@ -1,5 +1,7 @@
 import React,{ useState } from 'react';
 import { authorization, loadUserIcon } from '../../store';
+import { Alert } from 'antd';
+import "antd/dist/antd.css";
 import './auth-form.css';
 
 export const AuthForm = () => {
@@ -21,7 +23,6 @@ export const AuthForm = () => {
         event.preventDefault();
         const result = (сheckFormNormalize(formData.password) && await checkGithubUser(formData.login));
 
-        console.log('result ', result ) 
         authorization(result);
     }
 
@@ -62,7 +63,7 @@ export const AuthForm = () => {
             if (checkStrLength(str) && checkStrSymbol(str) && checkStrNumber(str)) {
                return true;
             } 
-            setError({error: true, message: 'Неккоректные данные ввода данных'})
+            setError({error: true, message: 'Неккоректные данные ввода'})
             return false;
     }
 
@@ -81,8 +82,16 @@ export const AuthForm = () => {
         return true;
     }
 
+    const closeError = () => {
+        setTimeout(() => {
+            setError((state) => ({error: false, message:null}))
+        }, 2500);
+    }
+
+    if (error.error) closeError();
     return (
         <div className='form'>
+            { error.error ? <Alert className="auth-error" message={error.message} type="error" showIcon/> : null }
             <form className="auth-form" onSubmit={Finish}>
                 <h1>Авторизация</h1>
                 <div className="login">
@@ -104,9 +113,7 @@ export const AuthForm = () => {
                         placeholder="Введите пароль..." 
                         value={formData.password} 
                         type="password"
-                    >
-
-                    </input>
+                    />
                 </div>
 
                 <button type="submit">Войти</button>

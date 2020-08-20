@@ -12,7 +12,7 @@ import './app.css';
 function App() {
   const Store = useStore(store);
 
-  if (!Store.authorization) return <AuthPage/>
+//  if (!Store.authorization) return <AuthPage/>
   return (
     <div className="App">
       <Sidebar />

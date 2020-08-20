@@ -18,3 +18,43 @@ body {
 	padding-left: 16px;
 	padding-top: 16px;
 }
+
+.terminals-list-table {
+	margin-top: 30px;
+}
+
+.terminals-list-table table {
+	width: 100%;
+}
+
+.terminals-list-table table .table-header {
+	background-color: #FAFAFA;
+}
+
+.terminals-list-table table .table-header th,
+.terminals-list-table table tr td {
+	padding: 16px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1)
+}
+
+.ant-btn-dashed:active,
+.ant-btn-dashed:hover,
+.ant-btn-dashed:focus,
+.ant-btn-primary,
+.ant-btn-primary:active,
+.ant-btn-primary:hover,
+.ant-btn-primary:focus {
+    color: #4CAF50;
+    background: #fff;
+    border-color: #4CAF50;
+}
+
+.add-terminals {
+	max-width: 180px;
+}
+
+.add-terminals button {
+	margin-top: 10px;
+	width: 100%;
+}
+/*#4CAF50 зеленый*/

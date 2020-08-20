@@ -94,6 +94,7 @@ export const AuthForm = () => {
             { error.error ? <Alert className="auth-error" message={error.message} type="error" showIcon/> : null }
             <form className="auth-form" onSubmit={Finish}>
                 <h1>Авторизация</h1>
+
                 <div className="login">
                     <label htmlFor="login">Логин:</label>
                     <input 
@@ -115,7 +116,7 @@ export const AuthForm = () => {
                         type="password"
                     />
                 </div>
-
+                
                 <button type="submit">Войти</button>
             </form>
         </div>    

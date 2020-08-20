@@ -1,22 +1,19 @@
 import React from 'react';
+import { TableList } from '../table-list';
 import './table.css';
 
-export const TerminalTable = ({data = [], actions=[]}) => {
-
+export const Table = ({columsData = [], bodyData = [], action = () => {}}) => {
     return (
         <div className="terminals-list-table">
             <table cellSpacing="0">
                 <tbody>
                     <tr className="table-header">
-                        <th>#</th>
-                        <th>Название</th>
-                        <th>Описание</th>
-                        <th>Действие</th>
+                        { columsData.map( item => <><td>{item.title}</td></> ) }
                     </tr>
                     {
-                        data.map((item, idx) => {
+                        bodyData.map((item, idx) => {
                             const obj = {...item, idx};
-                            return <TerminalTableList data={obj} action={actions} />
+                            return <TableList data={obj} action={action} />
                         })
                     }
                 </tbody>

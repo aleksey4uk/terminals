@@ -3,6 +3,14 @@ import { useId } from "react-id-generator";
 import { useStore } from 'effector-react';
 import { terminalStore, addTerminal, deleteTerminal } from '../../store';
 import { Button } from 'antd';
+import { Table } from '../table';
+
+const columsDataTerminal = [
+    { title: "#" },
+    { title: "Название" },
+    { title: "Описание" },
+    { title: "Действие" },
+]
 
 export const TerminalsPage = () => {
     const [terminalForm, setTerminalForm] = useState({name: '', description: ''})
@@ -38,7 +46,7 @@ export const TerminalsPage = () => {
                 </div>
                 <Button onClick={() => Finish(terminalForm)} type="primary">Добавить</Button>
             </div>
-            {/*<TerminalTable data={dataTerminal}/> */}
+            {<Table columsData={columsDataTerminal} bodyData={dataTerminal} action={deleteTerminal}/> }
         </div>
     )
 }

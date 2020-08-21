@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import { useId } from "react-id-generator";
 import { useStore } from 'effector-react';
 import { terminalStore, addTerminal, deleteTerminal } from '../../store';
 import { Button } from 'antd';
 import { Table } from '../table';
 
 const columsDataTerminal = [
-    { title: "#" },
     { title: "Название" },
     { title: "Описание" },
     { title: "Действие" },

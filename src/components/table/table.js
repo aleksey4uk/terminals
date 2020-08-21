@@ -4,7 +4,7 @@ import './table.css';
 
 export const Table = ({columsData = [], bodyData = [], action = () => {}}) => {
     return (
-        <div className="terminals-list-table">
+        <div className="terminals-list-table table">
             <table cellSpacing="0">
                 <tbody>
                     <tr className="table-header">

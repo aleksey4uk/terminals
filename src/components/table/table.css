@@ -1,0 +1,9 @@
+.table {
+    overflow: auto;
+}
+
+@media screen and (max-width: 400px) {
+    td, tr {
+        font-size: 12px;
+    }
+}

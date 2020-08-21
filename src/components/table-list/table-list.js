@@ -7,7 +7,9 @@ export const TableList = ({data, idx, action}) => {
             <tr>
                 <td>{idx + 1}</td>
                 { 
-                    data.map((item, idx) => <td key={idx}>{item}</td>) }
+                    data.map((item, idx) => (
+                        <td key={idx}>{item}</td>)) 
+                }
                 {
                     action ? (
                         <td>

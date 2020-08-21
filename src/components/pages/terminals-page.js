@@ -27,6 +27,7 @@ export const TerminalsPage = () => {
     const Finish = (form) => {
         if(!form.name.length) return;
         addTerminal(form);
+        setTerminalForm({name: '', description:''});
     }
 
     return (

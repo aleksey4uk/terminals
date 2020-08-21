@@ -46,7 +46,7 @@ export const TerminalsPage = () => {
                 </div>
                 <Button onClick={() => Finish(terminalForm)} type="primary">Добавить</Button>
             </div>
-            {<Table columsData={columsDataTerminal} bodyData={dataTerminal} action={deleteTerminal}/> }
+            <Table columsData={columsDataTerminal} bodyData={dataTerminal} action={deleteTerminal}/> 
         </div>
     )
 }

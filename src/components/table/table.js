@@ -34,7 +34,6 @@ const FilterTable = ({data=[], func}) => {
         <div style={{display: "inline", position: 'relative'}}>
             <button onClick={ visibleFilter }><FilterOutlined /></button>
             {
-                //
                 filter ? (
                     <Radio.Group style={{position: 'absolute', right: 0, top: 20, listStyle: 'none', backgroundColor: 'white', border: '1px solid black'}} onChange={onChange} value={radioSelect}>
                         {

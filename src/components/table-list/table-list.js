@@ -12,7 +12,7 @@ export const TableList = ({data, idx, action, render}) => {
                         if(idx===0 && render) {
                             return (
                                 <td key={idx}>
-                                    <Link to={`/${data[0]}`}>{item}</Link>
+                                    <Link to={`/buyers/${data[0]}`}>{item}</Link>
                                 </td>)
                         }
                         return (

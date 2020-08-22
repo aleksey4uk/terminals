@@ -4,7 +4,7 @@ import { Radio } from 'antd';
 import { SortAscendingOutlined, FilterOutlined } from '@ant-design/icons';
 import './table.css';
 
-const FilterTable = ({data=[], func}) => {
+const FilterTable = ({data=[], func, clear}) => {
     const [filter, setFilter] = useState(false);
     const [radioSelect, setRadioSelect] = useState(null);
     const newFilterData = uniqData(data);
@@ -44,6 +44,7 @@ const FilterTable = ({data=[], func}) => {
                     </Radio.Group>
                 ) : null
             }
+            <button onClick={clear}>clear</button>
         </div>
     )
 }
@@ -57,21 +58,20 @@ export const Table = ({columsData = [], bodyData = [], action = null}) => {
 
     return (
         <div className="terminals-list-table table">
-
             <table cellSpacing="0">
                 <tbody>
                     <tr className="table-header">
                         <th>#</th>
                         { 
                             columsData.map( (item, idx) => {
-                                const {title, filter, sort} = item;
+                                const {title, filter, sort, clearFilter} = item;
                                 return (
                                 <>
                                     <th key={idx}>
                                         {title}
                                         {
                                             sort ? <button onClick={sort}>: {<SortAscendingOutlined />}</button> :
-                                            filter ? <FilterTable data={bodyData} func={editFilterData}/> : null
+                                            filter ? <FilterTable data={bodyData} func={filter} clear={clearFilter}/> : null
                                         }
                                     </th>
                                 </>

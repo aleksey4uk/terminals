@@ -1,4 +1,5 @@
 import { createStore, createEvent } from 'effector';
+import { useStore } from 'effector-react';
 
 //store authorization
 const authorization = createEvent('authorization');
@@ -26,6 +27,12 @@ const terminalStore = createStore([])
         return state.filter((item, idx) => idx !== payload)
     })
 
+
+
+////////////////////////////////////////////
+const storeLoad = createEvent('load store');
+const storeClientOld = createStore([])
+    .on(storeLoad, (state, payload) => payload);
 
 //////////////////////////////////////////
 const clientData = [
@@ -135,28 +142,39 @@ const clientData = [
             total: 100
         }
 ]
+
+const tempClientData = [];
 const sortClientTable = createEvent('sort');
 const filterClientTable = createEvent('filter');
+const clearFilterTable = createEvent('clear');
 
-const storeClient = createStore(clientData)
+const storeClient = createStore({clientData, tempClientData})
     .on(sortClientTable, (state, payload) => {
-        let oldArr = state.slice();
-        let newElement = state.sort((a, b) => a[payload]-b[payload])
-        
+        const {clientData} = state;
+
+        let oldArr = clientData.slice();
+        let newElement = clientData.sort((a, b) => a[payload]-b[payload])
+
         if (oldArr[0].id === newElement[0].id) {
-            return oldArr.sort((a, b) => b[payload] - a[payload])
+            newElement = oldArr.sort((a, b) => b[payload] - a[payload]);
         }
-        
-        return [...newElement]
+
+        return {...state, clientData: [...newElement]}
     })
     .on(filterClientTable, (state, payload) => {
+        let newArr = state.filter(item => item.name === payload)
+        return newArr;
+    })
+    .on(clearFilterTable, (state, payload)=> {
         
     })
+
 
 
 export { 
     store,
     filterClientTable, 
+    clearFilterTable,
     storeClient,
     sortClientTable,
     authorization,
@@ -164,4 +182,5 @@ export {
     terminalStore,
     addTerminal,
     deleteTerminal,
+    storeClientOld
 };

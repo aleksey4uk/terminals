@@ -1,6 +1,6 @@
 import React from 'react';
 import { useStore } from 'effector-react';
-import { storeClient, sortClientTable } from '../../store';
+import { storeClient, sortClientTable, filterClientTable, clearFilterTable, storeClientOld } from '../../store';
 import { Table } from '../table';
 
 const columsData = [
@@ -9,7 +9,8 @@ const columsData = [
     },
     {
         title: 'Имя покупателя',
-        filter: () => {}
+        filter: (name) => filterClientTable(name),
+        clearFilter: clearFilterTable
     },
     {
         title: 'Средний чек',
@@ -26,7 +27,7 @@ const columsData = [
 ]
 
 export const BuyersPage = () => {
-    const clientData  = useStore(storeClient);
+    const {clientData}  = useStore(storeClient);
     return (
         <div className="BuyersPage">
             <h1>Покупатели...</h1>

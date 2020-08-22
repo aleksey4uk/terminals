@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { AuthPage } from '../pages/auth-page';
 import { TerminalsPage } from '../pages/terminals-page';
 import { BuyersPage } from '../pages/buyers-page';
+import { NotPage } from '../pages/not-page';
 import { Sidebar } from '../sidebar';
 import './app.css';
 
@@ -20,7 +21,7 @@ function App() {
           <Route path="/buyers/:id ">
             <BuyersPage/>
           </Route>
-          <Redirect to="/terminals"/>
+          <Route component={NotPage}/>
         </Switch>
       </div>
     </div>

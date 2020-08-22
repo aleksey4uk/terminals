@@ -13,9 +13,12 @@ const FilterTable = ({data=[], func, clear}) => {
 
     const onChange = (e) => {
         const idx = e.target.value;
+
         setRadioSelect(idx)
+
         let name = newFilterData[idx].name
         func(name)
+
         visibleFilter(false);
         setRadioSelect(null);
     }
@@ -93,8 +96,12 @@ export const Table = ({columsData = [], bodyData = [], action = null }) => {
                     {
                         bodyData.map((item, idx) => {
                             const dataList = Object.values(item);
+                            let render = columsData.find(item => item.render);
+                            console.log(render);                          
+
                             if(idx+1 > pagination) return null; 
-                            return <TableList data={dataList} idx={idx} action={action} />
+
+                            return <TableList data={dataList} idx={idx} action={action} render={render}/>
                         })
                     }
                 </tbody>

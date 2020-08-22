@@ -5,7 +5,8 @@ import { Table } from '../table';
 
 const columsData = [
     {
-        title: 'ID Покупателя'
+        title: 'ID Покупателя',
+        render: 'Link'
     },
     {
         title: 'Имя покупателя',

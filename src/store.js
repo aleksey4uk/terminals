@@ -10,7 +10,8 @@ const store = createStore({authorization: false, img: null})
 
 store.watch((state) => console.log('текущее состояние store: ',state));
 
-//store terminals
+
+//store terminals////////////////////////////////////
 const addTerminal = createEvent('add terminal');
 const deleteTerminal = createEvent('delete terminal');
 
@@ -24,6 +25,7 @@ const terminalStore = createStore([])
     .on(deleteTerminal, (state, payload) => {
         return state.filter((item, idx) => idx !== payload)
     })
+
 
 //////////////////////////////////////////
 const clientData = [
@@ -134,19 +136,24 @@ const clientData = [
         }
 ]
 const sortClientTable = createEvent('sort');
+const filterClientTable = createEvent('filter');
+
 const storeClient = createStore(clientData)
     .on(sortClientTable, (state, payload) => {
         let oldArr = state.slice();
         let newElement = state.sort((a, b) => a[payload]-b[payload])
+        
         if (oldArr[0].id==newElement[0].id) {
             return oldArr.sort((a, b) => b[payload] - a[payload])
         }
+        
         return [...newElement]
     })
 
 
 export { 
-    store, 
+    store,
+    filterClientTable, 
     storeClient,
     sortClientTable,
     authorization,

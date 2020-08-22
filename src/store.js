@@ -1,20 +1,19 @@
 import { createStore, createEvent } from 'effector';
 
-//store authorization
+//store initianilation
 const authorization = createEvent('authorization');
 const loadUserIcon = createEvent('load user icon');
+const sortClientTable = createEvent('sort');
+const filterClientTable = createEvent('filter');
+const clearFilterTable = createEvent('clear');
+const addTerminal = createEvent('add terminal');
+const deleteTerminal = createEvent('delete terminal');
 
 const store = createStore({authorization: false, img: null})
     .on(authorization, (state, payload) => ({...state, authorization: payload}))
     .on(loadUserIcon, (state, payload) => ({...state, img: payload}));
 
-store.watch((state) => console.log('текущее состояние store: ',state));
-
-
 //store terminals////////////////////////////////////
-const addTerminal = createEvent('add terminal');
-const deleteTerminal = createEvent('delete terminal');
-
 const terminalStore = createStore([])
     .on(addTerminal, (state, payload) => {
         return [
@@ -25,7 +24,6 @@ const terminalStore = createStore([])
     .on(deleteTerminal, (state, payload) => {
         return state.filter((item, idx) => idx !== payload)
     })
-
 
 //////////////////////////////////////////
 const clientData = [
@@ -135,25 +133,49 @@ const clientData = [
             total: 100
         }
 ]
-const sortClientTable = createEvent('sort');
-const filterClientTable = createEvent('filter');
 
-const storeClient = createStore(clientData)
+const tempClientData = [];
+
+const storeClient = createStore({clientData, tempClientData})
     .on(sortClientTable, (state, payload) => {
-        let oldArr = state.slice();
-        let newElement = state.sort((a, b) => a[payload]-b[payload])
-        
-        if (oldArr[0].id==newElement[0].id) {
-            return oldArr.sort((a, b) => b[payload] - a[payload])
-        }
-        
-        return [...newElement]
-    })
 
+        const {clientData} = state;
+
+        let oldArr = clientData.slice();
+        
+        let newElement = clientData.sort((a, b) => a[payload]-b[payload])
+
+        if (oldArr[0].id === newElement[0].id) {
+            newElement = oldArr.sort((a, b) => b[payload] - a[payload]);
+        }
+
+        return {...state, clientData: [...newElement]}
+    })
+    .on(filterClientTable, (state, payload) => {
+        let oldState = state.tempClientData;
+        if (state.tempClientData.length <= 0) oldState = state.clientData.slice()
+
+        let newArr = state.clientData.filter(item => item.name === payload)
+
+        return {tempClientData: [...oldState], clientData: [...newArr]}
+    })
+    .on(clearFilterTable, (state, payload)=> {
+        if(state.tempClientData.length <= 0 ) return {
+            ...state
+        }
+
+        return {
+            clientData: [
+                ...state.tempClientData
+            ],
+            tempClientData: []
+        }
+    })
 
 export { 
     store,
     filterClientTable, 
+    clearFilterTable,
     storeClient,
     sortClientTable,
     authorization,

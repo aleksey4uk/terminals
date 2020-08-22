@@ -1,19 +1,21 @@
 import React from 'react';
 import { useStore } from 'effector-react';
-import { storeClient, sortClientTable,filterClientTable } from '../../store';
+import { storeClient, sortClientTable, filterClientTable, clearFilterTable } from '../../store';
 import { Table } from '../table';
 
 const columsData = [
     {
-        title: 'ID Покупателя'
+        title: 'ID Покупателя',
+        render: 'Link'
     },
     {
         title: 'Имя покупателя',
-        filter: () => {}
+        filter: (name) => filterClientTable(name),
+        clearFilter: clearFilterTable
     },
     {
         title: 'Средний чек',
-        sort: (check) => sortClientTable('averageСheck'),
+        sort: () => sortClientTable('averageСheck'),
     },
     {
         title: 'Колличество покупок',
@@ -26,11 +28,11 @@ const columsData = [
 ]
 
 export const BuyersPage = () => {
-    const data = useStore(storeClient);
+    const {clientData}  = useStore(storeClient);
     return (
         <div className="BuyersPage">
             <h1>Покупатели...</h1>
-            <Table columsData={columsData} bodyData={data} />
+            <Table columsData={columsData} bodyData={clientData} />
         </div>
     )
 }

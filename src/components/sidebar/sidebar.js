@@ -21,14 +21,14 @@ export const Sidebar = () => {
             <div className="sidebar-img" style={initStyle()}/>
             <Link 
                 onClick={ () => setSelectedLink('0') } 
-                className={ selectedLink == '0' ? 'active' : null } 
+                className={ selectedLink === '0' ? 'active' : null } 
                 id='0'
                 to="/terminals"
             >
                     Терминалы
             </Link>
             <Link 
-                className={ selectedLink == '1' ? 'active' : null } 
+                className={ selectedLink === '1' ? 'active' : null } 
                 onClick={() => setSelectedLink('1')}
                 id='1' 
                 to="/buyers"

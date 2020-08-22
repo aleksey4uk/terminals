@@ -1,6 +1,6 @@
 import React from 'react';
 import { useStore } from 'effector-react';
-import { storeClient, sortClientTable, filterClientTable, clearFilterTable, storeClientOld } from '../../store';
+import { storeClient, sortClientTable, filterClientTable, clearFilterTable } from '../../store';
 import { Table } from '../table';
 
 const columsData = [

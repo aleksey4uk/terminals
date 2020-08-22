@@ -1,8 +1,6 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { useStore } from 'effector-react';
-import { store } from '../../store';
-import { AuthPage } from '../pages/auth-page';
+//import { AuthPage } from '../pages/auth-page';// eslint-disable-next-line
 import { TerminalsPage } from '../pages/terminals-page';
 import { BuyersPage } from '../pages/buyers-page';
 import { Sidebar } from '../sidebar';
@@ -10,9 +8,8 @@ import './app.css';
 
 
 function App() {
-  const Store = useStore(store);
+//  if (!Store.authorization) return <AuthPage/>// eslint-disable-next-line
 
-//  if (!Store.authorization) return <AuthPage/>
   return (
     <div className="App">
       <Sidebar />

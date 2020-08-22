@@ -143,11 +143,14 @@ const storeClient = createStore(clientData)
         let oldArr = state.slice();
         let newElement = state.sort((a, b) => a[payload]-b[payload])
         
-        if (oldArr[0].id==newElement[0].id) {
+        if (oldArr[0].id === newElement[0].id) {
             return oldArr.sort((a, b) => b[payload] - a[payload])
         }
         
         return [...newElement]
+    })
+    .on(filterClientTable, (state, payload) => {
+        
     })
 
 

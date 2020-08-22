@@ -1,6 +1,6 @@
 import React from 'react';
 import { useStore } from 'effector-react';
-import { storeClient, sortClientTable,filterClientTable } from '../../store';
+import { storeClient, sortClientTable } from '../../store';
 import { Table } from '../table';
 
 const columsData = [
@@ -13,7 +13,7 @@ const columsData = [
     },
     {
         title: 'Средний чек',
-        sort: (check) => sortClientTable('averageСheck'),
+        sort: () => sortClientTable('averageСheck'),
     },
     {
         title: 'Колличество покупок',
@@ -26,11 +26,11 @@ const columsData = [
 ]
 
 export const BuyersPage = () => {
-    const data = useStore(storeClient);
+    const clientData  = useStore(storeClient);
     return (
         <div className="BuyersPage">
             <h1>Покупатели...</h1>
-            <Table columsData={columsData} bodyData={data} />
+            <Table columsData={columsData} bodyData={clientData} />
         </div>
     )
 }

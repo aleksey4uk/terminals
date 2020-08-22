@@ -9,13 +9,14 @@ export const ClientPage = () => {
     const { clientData } = useStore(storeClient);
 
     const client = clientData.find(item => +id === item.id);
-    
+
     if (!client) return <Redirect to="/404"/>
 
     const {id:ID, name, averageСheck, allPurchases, total} = client;
 
     return (
         <>
+            <h1>Страница покупателя</h1>
             <Card type="inner" title="ID покупателя:">
                 {ID}
             </Card>

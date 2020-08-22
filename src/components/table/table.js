@@ -16,6 +16,8 @@ const FilterTable = ({data=[], func, clear}) => {
         setRadioSelect(idx)
         let name = newFilterData[idx].name
         func(name)
+        visibleFilter(false);
+        setRadioSelect(null);
     }
 
     function uniqData(arr) {
@@ -49,11 +51,20 @@ const FilterTable = ({data=[], func, clear}) => {
     )
 }
 
-export const Table = ({columsData = [], bodyData = [], action = null}) => {
+export const Table = ({columsData = [], bodyData = [], action = null }) => {
+    const [pagination, setPagination] = useState(15);
+    const [activeButton, setActiveButton] = useState(pagination);
 
-    const editFilterData = (name) => {
-        const newArr = bodyData.filter(item => item.name === name);
-        return newArr;
+    const incPagination = () => {
+        if(pagination === bodyData.length) return;
+        setPagination(state => state+5);
+        setActiveButton(pagination + 5)
+    }
+
+    const ligthButton = (e) => {
+        let {name:num} = e.target;
+        setActiveButton(+num)
+        setPagination(+num)
     }
 
     return (
@@ -82,11 +93,41 @@ export const Table = ({columsData = [], bodyData = [], action = null}) => {
                     {
                         bodyData.map((item, idx) => {
                             const dataList = Object.values(item);
+                            if(idx+1 > pagination) return null; 
                             return <TableList data={dataList} idx={idx} action={action} />
                         })
                     }
                 </tbody>
+                
             </table>
+
+            <button onClick={incPagination} className="pagination-btn">{`...`}</button>
+
+            <div className="pagination">
+                <h3>Колличество отображаемых строк</h3>
+                    <button 
+                        name={5} 
+                        onClick={ligthButton} 
+                        className={`pagination-btn ${activeButton === 5 ? 'active' : null}`}
+                    >
+                        5
+                    </button>
+                    <button 
+                        name={10} 
+                        onClick={ligthButton} 
+                        className={`pagination-btn ${activeButton === 10 ? 'active' : null}`}
+                    >
+                        10
+                    </button>
+                    <button 
+                        name={15} 
+                        onClick={ligthButton} 
+                        className={`pagination-btn ${activeButton === 15 ? 'active' : null}`}
+                    >
+                        15
+                    </button>
+
+            </div>
         </div>
     )
 }

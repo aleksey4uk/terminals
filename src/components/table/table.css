@@ -2,8 +2,27 @@
     overflow: auto;
 }
 
+.table .pagination-btn {
+    margin: 5px !important;
+    min-width: 25px !important;
+    min-height: 25px !important;
+    color: black !important;
+    padding: 5px !important;
+}
+
+.pagination-btn.active {
+    background-color: #4CAF50 !important;
+    color: white !important;
+}
+
+.pagination-btn :hover {
+    background-color: #555 !important;
+    color: white !important;
+}
+
 @media screen and (max-width: 400px) {
     td, tr {
         font-size: 12px;
     }
 }
+

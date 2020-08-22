@@ -1,21 +1,19 @@
 import { createStore, createEvent } from 'effector';
-import { useStore } from 'effector-react';
 
-//store authorization
+//store initianilation
 const authorization = createEvent('authorization');
 const loadUserIcon = createEvent('load user icon');
+const sortClientTable = createEvent('sort');
+const filterClientTable = createEvent('filter');
+const clearFilterTable = createEvent('clear');
+const addTerminal = createEvent('add terminal');
+const deleteTerminal = createEvent('delete terminal');
 
 const store = createStore({authorization: false, img: null})
     .on(authorization, (state, payload) => ({...state, authorization: payload}))
     .on(loadUserIcon, (state, payload) => ({...state, img: payload}));
 
-store.watch((state) => console.log('текущее состояние store: ',state));
-
-
 //store terminals////////////////////////////////////
-const addTerminal = createEvent('add terminal');
-const deleteTerminal = createEvent('delete terminal');
-
 const terminalStore = createStore([])
     .on(addTerminal, (state, payload) => {
         return [
@@ -26,13 +24,6 @@ const terminalStore = createStore([])
     .on(deleteTerminal, (state, payload) => {
         return state.filter((item, idx) => idx !== payload)
     })
-
-
-
-////////////////////////////////////////////
-const storeLoad = createEvent('load store');
-const storeClientOld = createStore([])
-    .on(storeLoad, (state, payload) => payload);
 
 //////////////////////////////////////////
 const clientData = [
@@ -144,15 +135,14 @@ const clientData = [
 ]
 
 const tempClientData = [];
-const sortClientTable = createEvent('sort');
-const filterClientTable = createEvent('filter');
-const clearFilterTable = createEvent('clear');
 
 const storeClient = createStore({clientData, tempClientData})
     .on(sortClientTable, (state, payload) => {
+
         const {clientData} = state;
 
         let oldArr = clientData.slice();
+        
         let newElement = clientData.sort((a, b) => a[payload]-b[payload])
 
         if (oldArr[0].id === newElement[0].id) {
@@ -162,14 +152,25 @@ const storeClient = createStore({clientData, tempClientData})
         return {...state, clientData: [...newElement]}
     })
     .on(filterClientTable, (state, payload) => {
-        let newArr = state.filter(item => item.name === payload)
-        return newArr;
+        let oldState = state.tempClientData;
+        if (state.tempClientData.length <= 0) oldState = state.clientData.slice()
+
+        let newArr = state.clientData.filter(item => item.name === payload)
+
+        return {tempClientData: [...oldState], clientData: [...newArr]}
     })
     .on(clearFilterTable, (state, payload)=> {
-        
+        if(state.tempClientData.length <= 0 ) return {
+            ...state
+        }
+
+        return {
+            clientData: [
+                ...state.tempClientData
+            ],
+            tempClientData: []
+        }
     })
-
-
 
 export { 
     store,
@@ -182,5 +183,4 @@ export {
     terminalStore,
     addTerminal,
     deleteTerminal,
-    storeClientOld
 };

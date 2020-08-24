@@ -96,8 +96,7 @@ export const Table = ({columsData = [], bodyData = [], action = null }) => {
                     {
                         bodyData.map((item, idx) => {
                             const dataList = Object.values(item);
-                            let render = columsData.find(item => item.render);
-                            console.log(render);                          
+                            let render = columsData.find(item => item.render);                       
 
                             if(idx+1 > pagination) return null; 
 
